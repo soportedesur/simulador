@@ -1,0 +1,157 @@
+﻿.panel2 {
+    /*background-color: #1565C0;*/
+    background-color: #ECEFF1;
+    /*color:ghostwhite;*/
+}
+
+.panel1{
+    background-color:white;
+}
+
+html[dir="rtl"] .bidi {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+/*clase par ellipse radio buttom*/
+
+.radioButtondemoMultiColumn div.radioDemo2 {
+    margin-bottom: 15px;
+}
+
+.radioButtondemoMultiColumn h2 {
+    margin-left: 15px;
+}
+
+.radioButtondemoMultiColumn p {
+    width: 400px;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+}
+
+.radioButtondemoMultiColumn .md-checked {
+    background-color: #ECFAFB;
+    border-radius: 2px;
+}
+
+.radioButtondemoMultiColumn md-button.md-raised, .radioButtondemoMultiColumn button.md-raised {
+    width: 200px;
+}
+
+.radioButtondemoMultiColumn .row {
+    border-bottom: 1px dashed #ddd;
+}
+
+.radioButtondemoMultiColumn div.row:last-child {
+    border-bottom: 0px dashed #ddd;
+}
+
+.radioButtondemoMultiColumn .summary {
+    width: 100%;
+    padding-top: 10px;
+    margin-left: 25px;
+    margin-top: 20px;
+    margin-bottom: -5px;
+}
+
+.radioButtondemoMultiColumn .title {
+    font-weight: bolder;
+}
+
+.radioButtondemoMultiColumn .selectedUser .md-checked {
+    padding: 8px;
+    width: 100px;
+}
+
+.md-button .md-cornered {
+    border-radius: 15px;
+    max-width:190px;
+}
+
+.md-card {
+    border-radius: 15px;
+    border-top: 2px solid #2196F3;
+    border-bottom: 2px solid #2196F3;
+}
+
+.noInputMargin {
+    margin: 10px 0px 0px 0px !important;
+    line-height: 15px !important;
+    font-size: 14px !important;
+}
+/*Hacer mas pequeño el autoComplete*/
+md-autocomplete[md-floating-label] md-autocomplete-wrap {
+    height: 40px !important;
+    font-size:14px !important;
+    min-width:250px;
+}
+md-autocomplete[md-floating-label] md-autocomplete-wrap > md-input-container {
+    margin: 0px !important;
+}
+
+/*Para ocultar el div md-error-spacer y evitar que haga mas espacion en el input*/
+
+.hide-validation-error .md-errors-spacer {
+    display: none;
+}
+
+.md-steppers-vertical .md-stepper {
+    padding: 8px 12px !important;
+}
+.md-steppers-vertical .md-steppers-scope {
+    padding-left: 10px !important;
+}
+
+.md-steppers-header {
+    background-color: #1565C0;
+    color:ghostwhite !important;
+}
+
+.BtnReload > svg {
+    margin-top: 5px !important;
+    margin-bottom: -5px;
+}
+.BtnAddConcept > svg {
+    margin-bottom: -5px;
+}
+
+.rotate180 {
+    display: inline-block;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all linear 200ms;
+    transition: all linear 200ms;
+}
+
+
+.md-steppers-linear .md-stepper-title, .md-steppers-linear .md-stepper-title small:not(.md-stepper-error-message) {
+    color: #90A4AE;
+}
+
+.md-whiteframe-4dp, .md-whiteframe-z2 {
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 0px 0px 0 rgba(0,0,0,.12);
+}
+
+.InputResponsable {
+   max-width:250px !important;
+}
+
+.InputResponsable > .md-errors-spacer {
+    display:none !important;
+}
+
+.mfb-component--br
+{
+    bottom:40% !important;
+}
+
+.CampanaNoPagos {
+    position: absolute;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 27px;
+    width: 100%;
+}

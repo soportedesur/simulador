@@ -1,0 +1,40 @@
+﻿
+<div layout="column" ng-controller="BusquedaController" style="width:990px;min-height:300px;height:auto !important;padding:0px!important;height:100%;">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/TablaBusqueda.css" rel="stylesheet" />
+    <md-toolbar style="background-color:#1565C0">
+        <div class="md-toolbar-tools">
+            <h2>Busqueda</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelDialog()">
+                <ng-md-icon icon="clear" style="fill:ghostwhite" size="24"></ng-md-icon> 
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding layout="row"  md-theme="docs-dark" style="background-color:#263238;min-height:80px;">
+        <md-input-container flex="150"   style="min-width: 200px; margin: 20px 10px 0px 0px !important;">
+            <label>Año</label>
+            <md-select name="type" ng-model="YearBusqueda">
+                <md-option ng-repeat="yearList in yearsListaMostrar" ng-value="yearList">{{yearList}}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-button md-no-ink   ng-click="filtrarYear()">Filtrar</md-button>
+    </md-content>
+   <md-content flex>
+       <table ng-table="tableParams" class="table table-condensed table-bordered table-striped table-scroll">
+           <tr ng-repeat="row in $data">
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="width:100px;text-align:center;vertical-align:text-bottom" data-title="'Folio'" filter="{folio: 'text'}">{{row.folio}}</td>
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="position:relative;" data-title="'Beneficiario'" filter="{Beneficiario: 'text'}"><div class="table-truncate__body">{{row.Beneficiario}}</div></td>
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="width:100px" data-title="'Fecha de Pago'" filter="{ FechaDePago: 'text' }">{{row.FechaDePago}}</td>
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="width:100px" data-title="'Fechade solicitud'" filter="{ FechaSolicitud: 'text' }">{{row.FechaSolicitud }}</td>
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="width:85px" data-title="'Programado'" filter="{Programacion: 'select'}" filter-data="TipoProgramado">{{row.Programacion}}</td>
+               <td ng-class="row.Eliminado == true ? 'Eliminado' : ''" style="width:100px" data-title="'Monto'" filter="{'Monto': 'number'}">$ {{row.Monto | number}}</td>
+               <td style="width:80px" data-title="''">
+                   <md-button class="md-icon-button" aria-label="More" style="margin:0px !important" ng-click="Detalles(row.ID)">
+                       <ng-md-icon icon="border_color" style="fill:dimgray" size="20"></ng-md-icon>
+                   </md-button>
+               </td>
+           </tr>
+       </table>
+   </md-content>
+</div> 

@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="adCONS_DESURModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admAlmacenes">
+          <Key>
+            <PropertyRef Name="CIDALMACEN" />
+          </Key>
+          <Property Name="CIDALMACEN" Type="int" Nullable="false" />
+          <Property Name="CCODIGOALMACEN" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CNOMBREALMACEN" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="CFECHAALTAALMACEN" Type="datetime" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION1" Type="int" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION2" Type="int" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION3" Type="int" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION4" Type="int" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION5" Type="int" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION6" Type="int" Nullable="false" />
+          <Property Name="CSEGCONTALMACEN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CTEXTOEXTRA1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CTEXTOEXTRA2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CTEXTOEXTRA3" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CFECHAEXTRA" Type="datetime" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA1" Type="float" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA2" Type="float" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA3" Type="float" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA4" Type="float" Nullable="false" />
+          <Property Name="CBANDOMICILIO" Type="int" Nullable="false" />
+          <Property Name="CTIMESTAMP" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="CSCALMAC2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CSCALMAC3" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CSISTORIG" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="admCaracteristicasValores">
+          <Key>
+            <PropertyRef Name="CIDVALORCARACTERISTICA" />
+          </Key>
+          <Property Name="CIDVALORCARACTERISTICA" Type="int" Nullable="false" />
+          <Property Name="CIDPADRECARACTERISTICA" Type="int" Nullable="false" />
+          <Property Name="CVALORCARACTERISTICA" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CNEMOCARACTERISTICA" Type="varchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="adCONS_DESURModelStoreContainer">
+          <EntitySet Name="admAlmacenes" EntityType="Self.admAlmacenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="admCaracteristicasValores" EntityType="Self.admCaracteristicasValores" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="adCONS_DESURModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admAlmacenes">
+          <Key>
+            <PropertyRef Name="CIDALMACEN" />
+          </Key>
+          <Property Name="CIDALMACEN" Type="Int32" Nullable="false" />
+          <Property Name="CCODIGOALMACEN" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNOMBREALMACEN" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CFECHAALTAALMACEN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CIDVALORCLASIFICACION1" Type="Int32" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION2" Type="Int32" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION3" Type="Int32" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION4" Type="Int32" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION5" Type="Int32" Nullable="false" />
+          <Property Name="CIDVALORCLASIFICACION6" Type="Int32" Nullable="false" />
+          <Property Name="CSEGCONTALMACEN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CTEXTOEXTRA1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CTEXTOEXTRA2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CTEXTOEXTRA3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CFECHAEXTRA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CIMPORTEEXTRA1" Type="Double" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA2" Type="Double" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA3" Type="Double" Nullable="false" />
+          <Property Name="CIMPORTEEXTRA4" Type="Double" Nullable="false" />
+          <Property Name="CBANDOMICILIO" Type="Int32" Nullable="false" />
+          <Property Name="CTIMESTAMP" Type="String" MaxLength="23" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSCALMAC2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSCALMAC3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSISTORIG" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="admCaracteristicasValores">
+          <Key>
+            <PropertyRef Name="CIDVALORCARACTERISTICA" />
+          </Key>
+          <Property Name="CIDVALORCARACTERISTICA" Type="Int32" Nullable="false" />
+          <Property Name="CIDPADRECARACTERISTICA" Type="Int32" Nullable="false" />
+          <Property Name="CVALORCARACTERISTICA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNEMOCARACTERISTICA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="adDesurEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admAlmacenes" EntityType="Self.admAlmacenes" />
+          <EntitySet Name="admCaracteristicasValores" EntityType="Self.admCaracteristicasValores" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="adCONS_DESURModelStoreContainer" CdmEntityContainer="adDesurEntities">
+          <EntitySetMapping Name="admAlmacenes">
+            <EntityTypeMapping TypeName="adCONS_DESURModel.admAlmacenes">
+              <MappingFragment StoreEntitySet="admAlmacenes">
+                <ScalarProperty Name="CIDALMACEN" ColumnName="CIDALMACEN" />
+                <ScalarProperty Name="CCODIGOALMACEN" ColumnName="CCODIGOALMACEN" />
+                <ScalarProperty Name="CNOMBREALMACEN" ColumnName="CNOMBREALMACEN" />
+                <ScalarProperty Name="CFECHAALTAALMACEN" ColumnName="CFECHAALTAALMACEN" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION1" ColumnName="CIDVALORCLASIFICACION1" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION2" ColumnName="CIDVALORCLASIFICACION2" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION3" ColumnName="CIDVALORCLASIFICACION3" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION4" ColumnName="CIDVALORCLASIFICACION4" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION5" ColumnName="CIDVALORCLASIFICACION5" />
+                <ScalarProperty Name="CIDVALORCLASIFICACION6" ColumnName="CIDVALORCLASIFICACION6" />
+                <ScalarProperty Name="CSEGCONTALMACEN" ColumnName="CSEGCONTALMACEN" />
+                <ScalarProperty Name="CTEXTOEXTRA1" ColumnName="CTEXTOEXTRA1" />
+                <ScalarProperty Name="CTEXTOEXTRA2" ColumnName="CTEXTOEXTRA2" />
+                <ScalarProperty Name="CTEXTOEXTRA3" ColumnName="CTEXTOEXTRA3" />
+                <ScalarProperty Name="CFECHAEXTRA" ColumnName="CFECHAEXTRA" />
+                <ScalarProperty Name="CIMPORTEEXTRA1" ColumnName="CIMPORTEEXTRA1" />
+                <ScalarProperty Name="CIMPORTEEXTRA2" ColumnName="CIMPORTEEXTRA2" />
+                <ScalarProperty Name="CIMPORTEEXTRA3" ColumnName="CIMPORTEEXTRA3" />
+                <ScalarProperty Name="CIMPORTEEXTRA4" ColumnName="CIMPORTEEXTRA4" />
+                <ScalarProperty Name="CBANDOMICILIO" ColumnName="CBANDOMICILIO" />
+                <ScalarProperty Name="CTIMESTAMP" ColumnName="CTIMESTAMP" />
+                <ScalarProperty Name="CSCALMAC2" ColumnName="CSCALMAC2" />
+                <ScalarProperty Name="CSCALMAC3" ColumnName="CSCALMAC3" />
+                <ScalarProperty Name="CSISTORIG" ColumnName="CSISTORIG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admCaracteristicasValores">
+            <EntityTypeMapping TypeName="adCONS_DESURModel.admCaracteristicasValores">
+              <MappingFragment StoreEntitySet="admCaracteristicasValores">
+                <ScalarProperty Name="CIDVALORCARACTERISTICA" ColumnName="CIDVALORCARACTERISTICA" />
+                <ScalarProperty Name="CIDPADRECARACTERISTICA" ColumnName="CIDPADRECARACTERISTICA" />
+                <ScalarProperty Name="CVALORCARACTERISTICA" ColumnName="CVALORCARACTERISTICA" />
+                <ScalarProperty Name="CNEMOCARACTERISTICA" ColumnName="CNEMOCARACTERISTICA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

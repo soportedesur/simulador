@@ -1,0 +1,131 @@
+﻿
+<style>
+    /*.md-dialog-container {
+        height: 1074px !important;
+    }*/
+    .md-errors-spacer {
+        min-height: 0px !important;
+    }
+    .facturaField {
+        text-align: left
+    }
+</style>
+
+<div  layout="column"   style="width:790px;min-height:320px;padding:0px!important;">
+    <md-toolbar style="background-color:#1565C0">
+        <div class="md-toolbar-tools">
+            <h2>Detalle de la  factura {{FacturaT.Folio}} </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="CerrarDetallesFac()">
+                <ng-md-icon icon="clear" style="fill:ghostwhite" size="24"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div layout="column">
+        <div layout="row" style="margin:0px 20px;margin-bottom:10px">
+            <div flex="50">
+                <span class="facturaField">
+                    ID:<br /><strong>{{FacturaT.ID}}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Fecha:<br /><strong>{{FacturaT.Fecha }}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Empresa:<br /><strong>{{FacturaT.Empresa }}</strong><br />
+                </span>
+                <span class="facturaField">
+                    RFC Empresa:<br /><strong>{{FacturaT.RfcEmpresa }}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Folio Fiscal:<br /><strong>{{FacturaT.FolioFiscal}}</strong><br />
+                </span>
+            </div>
+            <div flex="50">
+                <span class="facturaField">
+                    Folio:<br /><strong>{{FacturaT.Folio }}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Correo:<br /><strong>{{FacturaT.Correo }}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Proveedor:<br /><strong>{{FacturaT.Proveedor}}</strong><br />
+                </span>
+                <span class="facturaField">
+                    RFC Proveedor:<br /><strong>{{FacturaT.RfcProveedor}}</strong><br />
+                </span>
+                <span class="facturaField">
+                    Importe:<br /><strong>${{FacturaT.Importe | number}}</strong><br />
+                </span>
+            </div>
+        </div>
+           
+        <md-divider></md-divider>
+          <div layout="row" layout-align="space-around center" style="min-height: 205px; margin:0px 20px; margin-top: 10px;">
+              <div layout="column">
+                  <md-checkbox ng-disabled="true" ng-model="FacturaT.CheckRfcProveedor" aria-label="Checkbox 1">
+                      RFC Proveedor
+                  </md-checkbox>
+                  <md-checkbox ng-disabled="true" ng-model="FacturaT.CheckCP" aria-label="Checkbox 2">
+                      Codigo Postal
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckRegFiscal" aria-label="Checkbox 3" ng-disabled="true">
+                     Registro Fiscal
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckRfcCliente" aria-label="Checkbox 4" ng-disabled="true">
+                    RFC Cliente
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckUsoCFDI" aria-label="Checkbox 8" ng-disabled="true">
+                      Uso CFDI
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckTipoCFDI" aria-label="Checkbox 11" ng-disabled="true">
+                      Tipo CFDI
+                  </md-checkbox>
+                
+              </div>
+              <div layout="column">
+                  <md-checkbox ng-model="FacturaT.CheckMetodoPago" aria-label="Checkbox 9" ng-disabled="true">
+                     Metodo de Pago
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckFormaPago" aria-label="Checkbox 10" ng-disabled="true">
+                     Forma de Pago
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckIvaDesglosado" aria-label="Checkbox 7" ng-disabled="true">
+                      Iva Desglosado
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.CheckUnidad" aria-label="Checkbox 5" ng-disabled="true">
+                      Unidad
+                  </md-checkbox>
+                  <md-checkbox ng-model="FacturaT.ChecDescripcion" aria-label="Checkbox 6" ng-disabled="true">
+                      Descripcion
+                  </md-checkbox>
+              
+              </div>
+          </div>
+        <md-divider></md-divider>
+ <md-content md-theme="docs-dark" style="padding:5px 20px;" ng-hide="FacturaT.Block">
+            <form name="selft.FacturasForm" novalidate layout="row" layout-align="start center">
+                <md-input-container style="min-width:190px;">
+                    <label>Estatus del la Factura</label>
+                    <md-select name="status"  ng-model="StatusFactura" ng-model-options="{trackBy: '$value.name'}"  required>
+                        <md-option ng-value="sta" ng-repeat="sta in Estatus">{{ sta.name }}</md-option>
+                    </md-select>
+                    <div ng-messages="FacturasForm.status.$error">
+                        <div ng-message="required">El estatus es obligatorio</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Fecha Pago</label>
+                    <md-datepicker name="fecha" md-min-date="minDate" ng-model="FacturaT.FechaPago" required></md-datepicker>
+                    <div ng-messages="FacturasForm.fecha.$error">
+                        <div ng-message="required">Esta fecha es obligatoria</div>
+                    </div>
+                </md-input-container>
+                <span flex></span>
+                <md-button md-no-ink class="md-primary"  ng-click="GuardarFac()">Guardar</md-button>
+            </form>
+        </md-content>
+    </div>
+
+</div>
+

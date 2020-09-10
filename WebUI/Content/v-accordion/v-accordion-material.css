@@ -1,0 +1,141 @@
+/**
+ * vAccordion - AngularJS multi-level accordion component
+ * @version v1.6.0
+ * @link https://github.com/dekyfin/v-accordion-material
+ * @author Desmond Kyeremeh <elDekyfin@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+
+/***************************************
+	v-accordion-material
+ ***************************************/
+/**
+ * Example HTML:
+ *
+	<v-accordion class="v-accordion-material">
+		<v-pane>
+			<v-pane-header id="pane-header" aria-controls="pane-content">
+				<div class="md-title">Title of the panel</div>
+				<div class="md-summary">Summary of its content</div>
+			</v-pane-header>
+			<v-pane-content id="pane-content" aria-labelledby="pane-header">
+				[content]
+			</v-pane-content>
+		</v-pane>
+	</v-accordion>
+ */
+v-accordion.v-accordion-material  {
+	margin: 5px;
+}
+.v-accordion-material v-pane{
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+	background: white;
+}
+.v-accordion-material v-pane > v-pane-header >div {
+	display: flex;
+	white-space: nowrap;
+}
+.v-accordion-material v-pane > v-pane-header md-title,
+.v-accordion-material v-pane > v-pane-header [md-title],
+.v-accordion-material v-pane > v-pane-header .md-title{
+	flex: 1;
+	font-size: inherit;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	outline: 0;
+	margin: 0;
+}
+.v-accordion-material v-pane > v-pane-header md-summary,
+.v-accordion-material v-pane > v-pane-header [md-summary],
+.v-accordion-material v-pane > v-pane-header .md-summary {
+	flex: 2;
+	max-width: 70%;
+	font-size: inherit;
+	opacity: 0.55;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	outline: 0;
+	margin: 0;
+	font-weight: normal;
+}
+
+.v-accordion-material v-pane-content  {
+	padding: 0 24px;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+.v-accordion-material v-pane-content > div {
+	padding-bottom: 20px;
+	opacity: 0;
+	-webkit-transform: translate3d(0, 30px, 0);
+	transform: translate3d(0, 30px, 0);
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s; 
+}
+
+.v-accordion-material v-pane {
+	overflow: hidden; 
+}
+.v-accordion-material v-pane.is-expanded {
+	box-shadow: 0 -1px 0 #e5e5e5, 0 0 2px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.1);
+	margin: 16px 0;
+}
+.v-accordion-material v-pane.is-expanded > v-pane-header {
+	background: initial;
+	padding-top: 16px;
+	border-width: 0;
+}
+.v-accordion-material v-pane.is-expanded > v-pane-header::before {
+	-webkit-transform: rotate(-225deg);
+	transform: rotate(-225deg); 
+	top: 36px;
+}
+.v-accordion-material v-pane.is-expanded>v-pane-content{
+	padding: 16px 24px;
+}
+.v-accordion-material v-pane.is-expanded > v-pane-content > div {
+	opacity: 1;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0); 
+}
+
+
+.v-accordion-material v-pane[disabled] v-pane-header::before {
+	display: none; 
+}
+
+.v-accordion-material v-pane-header {
+	padding: 0 60px 0 24px;
+	line-height: 48px;
+	border-top: 1px solid #eee;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s; 
+}
+.v-accordion-material v-pane-header::before{
+	content: "";
+	height: 8px;
+	width: 8px;
+	line-height: 24px;
+	display: block;
+	position: absolute;
+	top: 16px;
+	right: 30px;
+	border: 2px solid #888;
+	border-width: 0 0 2px 2px;
+	transition: all 0.25s; 
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg); 
+}
+.v-accordion-material v-pane-header:hover,
+.v-accordion-material v-pane-header:focus {
+	background-color: #eee;
+}
+
+@media screen and ( max-width: 599px ){
+	.v-accordion-material v-pane > v-pane-header md-summary,
+	.v-accordion-material v-pane > v-pane-header [md-summary],
+	.v-accordion-material v-pane > v-pane-header .md-summary {
+		display: none;
+	}
+}

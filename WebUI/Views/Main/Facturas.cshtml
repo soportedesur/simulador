@@ -1,0 +1,48 @@
+﻿<div layout="column" ng-controller="FacturaController" style="width:990px;min-height:300px;height:auto !important;padding:0px!important;height:100%;">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/TablaBusqueda.css" rel="stylesheet" />
+    <md-toolbar style="background-color:#1565C0">
+        <div class="md-toolbar-tools">
+            <h2>Lista de Facturas</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelDialog()">
+                <ng-md-icon icon="clear" style="fill:ghostwhite" size="24"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    @*<md-content flex>*@
+       <div layout="row">
+          <md-content flex="50">
+              <md-list >
+                  <md-subheader style="background-color:dimgray;color:ghostwhite;margin-top:-5px" class="md-no-sticky">Asignados</md-subheader>
+                  <md-list-item class="md-3-line" ng-repeat="item in dataset" ng-click="null">
+                      <md-button class="md-icon-button md-fab md-mini" ng-click="Detalles(item.ID)" aria-label="More">
+                          <ng-md-icon icon="border_color" style="fill:dimgray" size="20"></ng-md-icon>
+                      </md-button>
+                      <div class="md-list-item-text" layout="column">
+                          <h3>{{ item.Empresa }}</h3>
+                          <h4>Fecha: {{ item.Fecha }}</h4>
+                          <p>${{item.Importe | number }}</p>
+                      </div>
+                  </md-list-item>
+              </md-list>
+          </md-content>
+         <md-content flex="50" style="border-left:solid 1px #CFD8DC">
+             <md-list>
+                 <md-subheader style="background-color:dimgray;color:ghostwhite;margin-top:-5px" class="md-no-sticky">NO Asignados</md-subheader>
+                 <md-list-item class="md-3-line" ng-repeat="itemNA in datasetNA" ng-click="null">
+                     <md-button class="md-icon-button md-fab md-mini" ng-click="Detalles(itemNA.ID)" aria-label="More">
+                         <ng-md-icon icon="border_color" style="fill:dimgray" size="20"></ng-md-icon>
+                     </md-button>
+                     <div class="md-list-item-text" layout="column">
+                         <h3>{{ itemNA.Empresa }}</h3>
+                         <h4>Fecha: {{ itemNA.Fecha }}</h4>
+                         <p>${{itemNA.Importe | number }}</p>
+                     </div>
+                 </md-list-item>
+             </md-list>
+         </md-content>
+       </div>
+
+@*</md-content>*@
+</div>

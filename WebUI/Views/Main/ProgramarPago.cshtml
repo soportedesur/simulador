@@ -1,0 +1,427 @@
+﻿<div ng-controller="ProgramacionController as ctrl"  layout="row" class="md-whiteframe-14dp" style="width:1250px;padding:0px!important;max-width:1250px;margin-top:30px;margin-bottom:20px">
+    <div flex="40" class="panel1" layout-fill>
+        @*<md-toolbar class="md-primary md-whiteframe-12dp" style="margin-bottom:20px">
+            <div class="md-toolbar-tools" style="color:ghostwhite">
+                <ng-md-icon icon="monetization_on" ng-attr-style="fill:white" size="32"></ng-md-icon>
+               
+            </div>
+        </md-toolbar>*@
+        <div layout="row" layout-align="center center" style="color:white;background-color:#1565C0;max-height: 60px;">
+            <form name="formConsolidado" style="margin-top:35px;min-width:350px;color:white !important" layout-padding layout-align="start center" novalidate>
+               <div layout="row">
+                   <md-input-container class="md-block noInputMargin" style="min-width:320px;margin-right:5px;margin-left: 90px !important" md-theme="Consolidado-dark">
+                       <label style="color:white !important">Selecciona un Consolidado</label>
+                       <md-select ng-model="Consolidado" name="Consolidado" required>
+                           <md-option ng-repeat="Consol in Consolidados" ng-value="Consol">
+                               {{Consol}}
+                           </md-option>
+                       </md-select>
+                       <div ng-messages="ctrl.formConsolidado.Consolidado.$error">
+                           <div ng-message="required">Es obligatorio</div>
+                       </div>
+                   </md-input-container>
+                   <md-button md-no-ink style="margin:12px 8px !important;min-height:0px !important;min-width: 60px !important;" ng-click="RequirirConsolidado()">
+                        @*<ng-md-icon options='{"duration": 375}' class="BtnReload" icon="cached" ng-attr-style="fill:white" size="24"></ng-md-icon>*@
+                       <span data-ng-hide="BtnConsolidado">
+                           <i class="fa fa-refresh  fa-lg fa-fw"></i>
+                       </span>
+
+                       <span data-ng-show="BtnConsolidado">
+                           <i class="fa fa-refresh fa-spin  fa-lg fa-fw"></i>
+                       </span>
+                   </md-button>
+               </div>
+            </form>
+        </div>
+            <md-stepper id="stepper-demo"
+                        md-mobile-step-text="false"
+                        md-vertical="false"
+                        md-linear="true"
+                        md-alternative="true" >
+
+                <md-step md-label="DATOS">
+                    <md-steppers-header>
+                        
+                    </md-steppers-header>
+                    <md-step-body layout="column">
+                        
+                        <form name="ctrl.formGen" style="margin-top:20px" layout-padding layout-align="start center" novalidate>
+                            
+                                <md-input-container class="md-block noInputMargin hide-validation-error" flex="100">
+                                    <label>Beneficiario</label>
+                                    <input ng-model="PagoNuevo.Beneficiario"  name="bene" required>
+                                    <div ng-messages="ctrl.formGen.bene.$error">
+                                        <div ng-message="required">Es obligatorio</div>
+                                    </div>
+                                </md-input-container>
+                          
+                                <md-input-container class="md-block noInputMargin hide-validation-error"  flex="100">
+                                    <label>Autorizo</label>
+                                    <input ng-model="PagoNuevo.Autorizo"  name="Auto" required>
+                                    <div ng-messages="ctrl.formGen.Auto.$error">
+                                        <div ng-message="required">Es obligatorio</div>
+                                    </div>
+                                </md-input-container>
+                            
+                                <md-input-container class="md-block noInputMargin"  flex="100">
+                                    <label>Forma de pago</label>
+                                    <md-select ng-model="PagoNuevo.FormaPago" name="Fpago" required>
+                                        <md-option ng-repeat="formaPago in formasDePago" ng-value="formaPago">
+                                            {{formaPago}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="ctrl.formGen.Fpago.$error">
+                                        <div ng-message="required">Es obligatorio</div>
+                                    </div>
+                                </md-input-container>
+                        
+                                <md-input-container class="md-block noInputMargin" flex="100">
+                                    <label>Razon</label>
+                                    <md-select ng-model="PagoNuevo.Razon" name="Rsocial" ng-change="selectChanged()" required>
+                                        <md-option ng-repeat="raz in razonSocial" ng-value="raz">
+                                            {{raz}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="ctrl.formGen.Rsocial.$error">
+                                        <div ng-message="required">Es obligatorio</div>
+                                    </div>
+                                </md-input-container>
+                          
+                        </form>
+                </md-step-body>
+                    <md-step-actions layout="row" layout-align="end center">
+                        <md-button class="md-primary md-raised" ng-click="SiguienteDatosGen()">Continuar</md-button>
+                    </md-step-actions>
+                </md-step>
+                <md-step md-label="TIPO">
+                    <md-step-body class="radioButtondemoMultiColumn radioDemo2 bidi">
+                        <form name="ctrl.formFechas" layout-padding layout-align="center center" novalidate>
+                            <h5 style="margin: 2px !important;">Seleccione uno tipo de pago</h5>
+                            <md-divider style="padding:0px;"></md-divider>
+                            <md-content style="max-height:200px;font-size:10px !important">
+                                <md-radio-group ng-model="selecteRadio.selected" name="raidioBtn" ng-required="true">
+                                    <div ng-repeat="tps in tipos" class="row">
+                                        <div flex layout='row' layout-padding layout-align="start center">
+                                            <md-radio-button flex ng-value="tps.id" class="md-primary" style="font-size:small !important">
+                                                {{tps.title}}
+                                            </md-radio-button>
+                                            <div flex style="max-width:200px;padding:0px!important">
+                                                <md-datepicker ng-model="tps.fecha" md-min-date="minDate" class="ng-hide" ng-show="selecteRadio.selected == tps.id && selecteRadio.selected != 3 && selecteRadio.selected != 7 && selecteRadio.selected != 8" md-placeholder="fecha pago"></md-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-radio-group>
+                                <div ng-messages="ctrl.formFechas.raidioBtn.$error">
+                                    <div ng-message="required">Debe seleccionar una opcion</div>
+                                </div>
+                            </md-content>
+                            <md-divider></md-divider>
+                            <md-input-container flex="95" class="md-block noInputMargin">
+                                <label>Observaciones</label>
+                                <textarea ng-model="PagoNuevo.Observaciones" name="Observ" required md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                                <div ng-messages="ctrl.formFechas.Observ.$error" role="alert">
+                                    <div ng-message-exp="['required', 'maxlength']">
+                                        Este campo es obligatorio y debe ser menor a 150 caracteres
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </form>
+                    </md-step-body>
+                    <md-step-actions layout="row" layout-align="end center">
+                        
+                        <md-button class="md-primary" ng-click="Atras()">Atras</md-button>
+                        <md-button class="md-primary md-raised" ng-click="SiguienteDatosFech()">Continuar</md-button>
+                    </md-step-actions>
+                </md-step>
+                <md-step md-label="CONCEPTOS" id="3">
+                    <md-step-body>
+                        <form name="ctrl.formConcept"  style="margin-top:20px" layout-padding layout-align="center center" novalidate>
+                            <div layout-align="start center" layout="row">
+                                <md-autocomplete ng-disabled="ctrl.isDisabled" 
+                                                 layout-fill
+                                                 md-input-name="AutoProyecto"
+                                                 required
+                                                 md-no-cache="true"
+                                                 md-selected-item="ctrl.selectedItem" 
+                                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" 
+                                                 md-search-text="ctrl.searchText" 
+                                                 md-selected-item-change="ctrl.selectedItemChange(item)" 
+                                                 md-items="item in ctrl.querySearch(ctrl.searchText)" 
+                                                 md-item-text="item.display" 
+                                                 md-min-length="0" 
+                                                 md-require-match
+                                                 md-floating-label="SELECCIONA UN PROYECTO">
+                                    <md-item-template>
+                                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe ningun proyecto con el nombre "{{ctrl.searchText}}".
+                                    </md-not-found>
+                                    <div ng-messages="ctrl.formConcept.AutoProyecto.$error" ng-if="ctrl.formConcept.AutoProyecto.$touched">
+                                        <div ng-message="required"><b>Debes</b> Seleccionar un proyecto</div>
+                                        <div ng-message="md-require-match">Debe existir el proyecto</div>
+                                    </div>
+                                </md-autocomplete>
+                            </div>
+                            <div layout-align="start center" layout="row">
+                                <md-autocomplete ng-disabled="ctrl.isDisabled2"
+                                                 layout-fill
+                                                 md-input-name="AutoCuenta"
+                                                 required
+                                                 md-no-cache="true"
+                                                 md-selected-item="ctrl.selectedItem2"
+                                                 md-search-text-change="ctrl.searchTextChange2(ctrl.searchText2)"
+                                                 md-search-text="ctrl.searchText2"
+                                                 md-selected-item-change="ctrl.selectedItemChange2(item)"
+                                                 md-items="item in ctrl.querySearch2(ctrl.searchText2)"
+                                                 md-item-text="item.display"
+                                                 md-min-length="0"
+                                                 md-require-match
+                                                 md-floating-label="SELECCIONA UNA CUENTA">
+                                    <md-item-template>
+                                        <span md-highlight-text="ctrl.searchText2" md-highlight-flags="^i">{{item.display}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe ninguna cuenta con el nombre "{{ctrl.searchText2}}".
+                                    </md-not-found>
+                                    <div ng-messages="ctrl.formConcept.AutoCuenta.$error" ng-if="ctrl.formConcept.AutoCuenta.$touched">
+                                        <div ng-message="required"><b>Debes</b> Seleccionar una cuenta</div>
+                                        <div ng-message="md-require-match">Debe existir la cuenta</div>
+                                    </div>
+                                </md-autocomplete>
+                            </div>
+                            <div layout-align="start center" layout="row">
+                                <md-autocomplete ng-disabled="ctrl.isDisabled3"
+                                                 layout-fill
+                                                 md-input-name="AutoSubCuenta"
+                                                 required
+                                                 md-no-cache="true"
+                                                 md-selected-item="ctrl.selectedItem3"
+                                                 md-search-text-change="ctrl.searchTextChange3(ctrl.searchText3)"
+                                                 md-search-text="ctrl.searchText3"
+                                                 md-selected-item-change="ctrl.selectedItemChange3(item)"
+                                                 md-items="item in ctrl.querySearch3(ctrl.searchText3)"
+                                                 md-item-text="item.display"
+                                                 md-min-length="0"
+                                                 md-require-match
+                                                 md-floating-label="SELECCIONA UNA SUBCUENTA">
+                                    <md-item-template>
+                                        <span md-highlight-text="ctrl.searchText3" md-highlight-flags="^i">{{item.display}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe ninguna subcuenta con el nombre "{{ctrl.searchText3}}".
+                                    </md-not-found>
+                                    <div ng-messages="ctrl.formConcept.AutoSubCuenta.$error" ng-if="ctrl.formConcept.AutoSubCuenta.$touched">
+                                        <div ng-message="required"><b>Debes</b> Seleccionar una subcuenta</div>
+                                        <div ng-message="md-require-match">Debe existir la subcuenta</div>
+                                    </div>
+                                </md-autocomplete>
+                            </div>
+                            <div layout-align="star center">
+                                <md-input-container flex="100" class="md-block noInputMargin">
+                                    <label>Concepto</label>
+                                    <textarea ng-model="Conceptos.Concepto" name="concep" md-maxlength="150" rows="3" md-select-on-focus required></textarea>
+                                    <div ng-messages="ctrl.formConcept.concep.$error" role="alert">
+                                        <div ng-message-exp="['required', 'maxlength']">
+                                            Este campo es obligatorio y debe ser menor a 150 caracteres
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-align="star center">
+                                <md-input-container class="md-block noInputMargin" flex="100">
+                                    <label>Monto</label>
+                                    <input ng-model="Conceptos.Monto" name="mont" type="text" ui-maskmoney data-prefix="$" data-decimal="." data-thousands="," required>
+                                    <div ng-messages="ctrl.formConcept.mont.$error">
+                                        <div ng-message="required">Es obligatorio</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                    </form>
+                   </md-step-body>
+                    <md-step-actions layout="column" layout-align="end center">
+                       <div layout="row" layout-align="end center">
+                           <md-button class="md-primary" ng-click="Atras()">Atras</md-button>
+                           <md-button class="md-primary md-raised" ng-click="SiguienteDatosConcept()">Agregar concepto</md-button>
+                       </div>
+                        <md-button class="md-primary md-hue-1" ng-click="PagoListAdd()">AGREGAR PAGO PARA ENVIAR</md-button>
+                    </md-step-actions>
+                </md-step>
+            </md-stepper>
+    </div>
+   <div flex="60" layout-fill layout-padding class="panel2">
+      
+    <div class="main-content-wrapper" style="background-color:#ECEFF1;">
+       
+            <md-tabs  md-dynamic-height md-border-bottom>
+                <md-tab label="PAGO NUEVO">
+                    <md-content style="max-height:645px;background-color:#ECEFF1;">
+                        <div layout-padding>
+                            <div layout="row">
+                                <div layout="column" flex="60">
+                                    <span class="md-caption"><strong>Beneficiario</strong> </span>
+                                    <span class="md-caption">{{PagoNuevo.Beneficiario | uppercase}}</span>
+                                </div>
+                                <div layout="column" flex="40">
+                                    <span class="md-caption"><strong>Autorizo</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.Autorizo | uppercase}}</span>
+                                </div>
+                            </div>
+                            <md-divider></md-divider>
+                            <div layout="row" layout-align="space-between center">
+                                <div layout="column" flex="15">
+                                    <span class="md-caption"><strong>Forma de pago</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.FormaPago | uppercase}}</span>
+                                </div>
+                                <div layout="column" flex="30">
+                                    <span class="md-caption"><strong>Razon</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.Razon | uppercase}}</span>
+                                </div>
+                                <div layout="column" flex="20">
+                                    <span class="md-caption"><strong>Pago</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.Programacion | uppercase}}</span>
+                                </div>
+                                <div layout="column" flex="15">
+                                    <span class="md-caption"><strong>Fecha de pago</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.FechaDePago | amDateFormat:'dddd, MMMM  YYYY'}}</span>
+                                </div>
+                            </div>
+                            <md-divider></md-divider>
+                            <div layout="row" layout-align="space-between center" ng-hide="MostrarNP">
+                                <div layout="column" flex="15">
+                                    <span class="md-caption"><strong>Responsable del NP</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.CategoriaNP | uppercase}}</span>
+                                </div>
+                                <div layout="column" flex="30">
+                                    <span class="md-caption"><strong>Nombre del NP</strong></span>
+                                    <span class="md-caption">{{PagoNuevo.ResponsableNP | uppercase}}</span>
+                                </div>
+                            </div>
+                            <md-divider></md-divider>
+                            <div layout="row" layout-align="start center">
+                                <div layout="column" flex="95">
+                                    <span class="md-caption"><strong>Observaciones</strong></span>
+                                    <p class="md-caption">{{PagoNuevo.Observaciones | uppercase}}</p>
+                                </div>
+                            </div>
+                            <md-divider></md-divider>
+                        </div>
+                        <md-subheader class="md-primary">TOTAL DEL PAGO: {{MontoTotal | number: 2}}</md-subheader>
+
+                        <md-table-container>
+                            <table md-table ng-model="selectedTable">
+                                <thead md-head md-order="query.order">
+                                    <tr md-row>
+                                        <th md-column></th>
+                                        <th md-column md-order-by="nameToLower"><span>Concepto</span></th>
+                                        <th md-column ><span>Proyecto</span></th>
+                                        <th md-column >Cuenta</th>
+                                        <th md-column >Subcuenta</th>
+                                        <th md-column >Monto</th>
+                                    </tr>
+                                </thead>
+                                <tbody md-body>
+                                    <tr md-row md-select="concept" md-select-id="Concepto" md-auto-select ng-repeat="concept in listaConceptos">
+                                        <td md-cell style="padding: 0 5px !important;">
+                                            <md-button ng-click="EliminarConcepto(concept.ID_Pagos)" style="min-width:20px !important;margin:0px !important;min-height:15px !important;line-height:0px !important" aria-label="btn2" md-no-ink class="md-warn">
+                                                <ng-md-icon icon="delete_sweep" ng-click="" ng-attr-style="fill:#EF5350" size="24"></ng-md-icon>
+                                            </md-button>
+                                        </td>
+                                        <td md-cell>{{concept.Concepto}}</td>
+                                        <td md-cell md-truncate>{{concept.Proyecto}}</td>
+                                        <td md-cell md-truncate>{{concept.Cuenta}}</td>
+                                        <td md-cell md-truncate>{{concept.Subcuenta}}</td>
+                                        <td md-cell>{{concept.Monto | number: 2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                       
+                    </md-content>
+                </md-tab>
+                <md-tab label="LISTA DE PAGOS">
+                    <md-content style="max-height: 645px;background-color:transparent !important">
+                        <v-accordion class="v-accordion-material">
+                            <v-pane id="{{ ::pane.ID }}" ng-repeat="pago in listaPagos" expanded="pane.isExpanded">
+
+                                <v-pane-header id="{{ ::pago.ID }}-header" layout="row" layout-fill  aria-controls="{{ ::pago.ID }}-content">
+                                    <h5 flex="70">Beneficiario: {{ ::pago.Beneficiario }}</h5>
+
+                                    <div flex="20" style="font-size:smaller;font-family:sans-serif">{{::pago.MontoT | number: 2}}</div>
+                                </v-pane-header>
+
+                                <v-pane-content id="{{ ::pane.ID }}-content" aria-labelledby="{{ ::pane.ID }}-header">
+
+                                    <div layout-padding>
+                                        <div layout="row">
+                                            <div layout="column" flex="30">
+                                                <span class="md-caption"><strong>Fecha de pago</strong></span>
+                                                <span class="md-caption">{{pago.FechaDePago | amDateFormat:'DD/MM/YYYY'}}</span>
+                                            </div>
+                                            <div layout="column" flex="30">
+                                                <span class="md-caption"><strong>Autorizo</strong></span>
+                                                <span class="md-caption">{{pago.Autorizo | uppercase}}</span>
+                                            </div>
+                                            <div layout="column" flex="30">
+                                                <span class="md-caption"><strong>Forma de pago</strong></span>
+                                                <span class="md-caption">{{pago.FormaPago | uppercase}}</span>
+                                            </div>
+                                        </div>
+                                        <md-divider></md-divider>
+                                        <div layout="row" layout-align="space-between center">
+
+                                            <div layout="column" flex="70">
+                                                <span class="md-caption"><strong>Razon</strong></span>
+                                                <span class="md-caption" md-truncate>{{pago.Razon | uppercase}}</span>
+                                            </div>
+                                            <div layout="column" flex="30">
+                                                <span class="md-caption"><strong>Pago</strong></span>
+                                                <span class="md-caption">{{pago.Programacion | uppercase}}</span>
+                                            </div>
+                                        </div>
+                                        <md-divider></md-divider>
+                                        <div layout="row" layout-align="start center">
+                                            <div layout="column" flex="95">
+                                                <span class="md-caption"><strong>Observaciones</strong></span>
+                                                <p class="md-caption" md-truncate>{{pago.Observaciones | uppercase}}</p>
+                                            </div>
+                                        </div>
+                                        <md-divider></md-divider>
+                                    </div>
+                                    <md-list>
+                                        <md-list-item class="md-3-line" ng-repeat="concept in pago.Conceptos">
+                                            <div class="md-list-item-text" layout-padding>
+                                                <div style="border-left:solid 5px #01579B;background-color:#E3F2FD" layout-padding>
+                                                    <p style="font-style:italic">{{concept.Concepto}}</p>
+                                                </div>
+                                                <div layout="row" style="border:dotted 1px 0px 1px #ECEFF1">
+                                                    <div flex="30">
+                                                        <h4>Proyecto</h4>
+                                                        <p md-truncate>{{concept.Proyecto}}</p>
+                                                    </div>
+                                                    <div flex="30">
+                                                        <h4>Cuenta</h4>
+                                                        <p md-truncate>{{concept.Cuenta}}</p>
+                                                    </div>
+                                                    <div flex="30">
+                                                        <h4>SubCuenta</h4>
+                                                        <p md-truncate>{{concept.Subcuenta}}</p>
+                                                    </div>
+                                                </div>
+                                                <h4 style="border-left:solid 5px #01579B;background-color:#ECEFF1">$ {{concept.Monto | number: 2}}</h4>
+                                            </div>
+                                            <md-divider></md-divider>
+                                        </md-list-item>
+                                    </md-list>
+
+                                </v-pane-content>
+                            </v-pane>
+                        </v-accordion>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+         </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,464 @@
+﻿
+<style>
+    .autocomplete-custom-template li {
+        border-bottom: 1px solid #ccc;
+        height: auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        white-space: normal;
+        line-height:28px;
+        font-size:12px;
+    }
+
+        .autocomplete-custom-template li:last-child {
+            border-bottom-width: 0;
+        }
+
+    .autocomplete-custom-template .item-title,
+    .autocomplete-custom-template .item-metadata {
+        /*display: block;*/
+        line-height: 1.5;
+    }
+
+    .autocomplete-custom-template .item-title ng-md-icon {
+        height: 24px;
+        width: 30px;
+    }
+
+</style>
+
+
+<div ng-controller="ProgramacionController as ctrl" id="CuerpoPagos" flex="90" layout="column" class="md-whiteframe-14dp" style="width:890px;height:auto !important;padding:0px!important;height:100%;margin-top:20px;">
+    <div class="panel1" layout-fill>
+        <div layout="row" layout-align="center center" style="color:white;background-color:#1565C0;min-height:100px">
+            <form name="formConsolidado"  style="min-width:420px;color:white !important" layout-padding layout-align="start center" novalidate>
+                <div layout="row">
+                    <md-input-container class="md-block noInputMargin" style="min-width:420px;margin-right:5px;margin-left: 90px !important" md-theme="Consolidado-dark">
+                        <label style="color:white !important">Selecciona un Consolidado</label>
+                        <md-select ng-model="Consolidado" name="Consolidado">
+                            <md-option ng-repeat="Consol in Consolidados" ng-value="Consol">
+                                {{Consol}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="ctrl.formConsolidado.Consolidado.$error">
+                            <div ng-message="required">Es obligatorio</div>
+                        </div>
+                    </md-input-container>
+                    <md-button md-no-ink style="margin:12px 8px !important;min-height:0px !important;min-width: 60px !important;" ng-click="RequirirConsolidado()">
+                        @*<ng-md-icon options='{"duration": 375}' class="BtnReload" icon="cached" ng-attr-style="fill:white" size="24"></ng-md-icon>*@
+                        <span data-ng-hide="BtnConsolidado">
+                            <i class="fa fa-refresh  fa-lg fa-fw">
+                                <md-tooltip>
+                                    Actualizar consolidado
+                                </md-tooltip>
+                            </i>
+                        </span>
+
+                        <span data-ng-show="BtnConsolidado">
+                            <i class="fa fa-refresh fa-spin  fa-lg fa-fw">
+                            </i>
+                        </span>
+                    </md-button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <form name="ctrl.formGen" id="FormPagos"  style="margin-top:20px" layout-padding layout-align="start center" novalidate>
+                <div layout="row" layout-align="space-around center"> 
+                    <div layout-align="center center" layout="row" style="min-width:400px;padding-top:16px">
+                        <md-autocomplete ng-disabled="isDisabledAutoComplete"
+                                         layout-fill
+                                         md-input-name="AutoBeneficiario"
+                                         required
+                                         md-no-cache="true"
+                                         md-selected-item="ctrl.selectedItem5"
+                                         md-search-text-change="ctrl.searchTextChange5(ctrl.searchText5)"
+                                         md-search-text="ctrl.searchText5"
+                                         md-selected-item-change="ctrl.selectedItemChange5(item)"
+                                         md-items="item in ctrl.querySearch5(ctrl.searchText5)"
+                                         md-item-text="item.nombre"
+                                         md-min-length="0"
+                                         md-require-match
+                                         md-floating-label="SELECCIONA UN BENEFICIARIO">
+                            <md-item-template>
+                                <span md-highlight-text="ctrl.searchText5" md-highlight-flags="^i">{{item.nombre}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No existe ningun beneficiario con el nombre "{{ctrl.searchText5}}".
+                            </md-not-found>
+                            <div ng-messages="ctrl.formGen.AutoBeneficiario.$error" ng-if="ctrl.formGen.AutoBeneficiario.$touched">
+                                <div ng-message="required"><b>Debes</b> Seleccionar un beneficiario</div>
+                                <div ng-message="md-require-match">Debe existir el beneficiario</div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                    <md-input-container class="md-block noInputMargin hide-validation-error" flex="50" style="max-width:400px !important">
+                        <label>Autorizo</label>
+                        <input ng-model="PagoNuevo.Autorizo" name="Auto" required>
+                        <div ng-messages="ctrl.formGen.Auto.$error">
+                            <div ng-message="required">Es obligatorio</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="space-around center">
+                    <md-input-container class="md-block noInputMargin" flex="50" style="max-width:200px !important">
+                        <label>Forma de pago</label>
+                        <md-select ng-model="PagoNuevo.FormaPago" ng-change="selectChangedFormaPago()" name="Fpago" required>
+                            <md-option ng-repeat="formaPago in formasDePago" ng-value="formaPago">
+                                {{formaPago}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="ctrl.formGen.Fpago.$error">
+                            <div ng-message="required">Es obligatorio</div>
+                        </div>
+                    </md-input-container>
+
+                    <div layout-align="center center" layout="row" style="min-width:600px;padding-top:16px;">
+                        <md-autocomplete ng-disabled="isDisabledAutoCompleteRazon"
+                                         layout-fill
+                                         layout="column"
+                                         md-input-name="AutoRazon"
+                                         required
+                                         md-no-cache="true"
+                                         md-selected-item="ctrl.selectedItem6"
+                                         md-search-text-change="ctrl.searchTextChange6(ctrl.searchText6)"
+                                         md-search-text="ctrl.searchText6"
+                                         md-selected-item-change="ctrl.selectedItemChange6(item)"
+                                         md-items="item in ctrl.querySearch6(ctrl.searchText6)"
+                                         md-item-text="item.value"
+                                         md-min-length="0"
+                                         md-menu-class="autocomplete-custom-template"
+                                         md-require-match
+                                         md-floating-label="SELECCIONA UNA RAZON">
+                            <md-item-template>
+                                <span class="item-title" layout="row" style="line-height:2;font-size:14px">
+                                    <ng-md-icon icon="account_balance" style="fill:dimgrey" size="24"></ng-md-icon>
+                                    <span md-highlight-text="ctrl.searchText6" md-highlight-flags="^i">
+                                        {{item.Cuenta | limitTo : 50 }}
+                                    </span>
+                                </span>
+                                <span layout="column" class="item-metadata">
+                                    <span style="margin-left:25px">
+                                        <strong>{{item.Banco}}</strong>
+                                    </span>
+                                    <span style="margin-left:25px">
+                                        Cta  <strong>{{item.CtaBancaria}}</strong>
+                                    </span>
+                                </span>
+                            </md-item-template>
+                            <md-not-found>
+                                No existe ninguna razon con el nombre "{{ctrl.searchText6}}".
+                            </md-not-found>
+                            <div ng-messages="ctrl.formGen.AutoRazon.$error" ng-if="ctrl.formGen.AutoRazon.$touched">
+                                <div ng-message="required"><b>Debes</b> Seleccionar una razon</div>
+                                <div ng-message="md-require-match">Debe existir la razon</div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+
+                </div>
+                <div layout="row" layout-align="start center">
+                    <md-checkbox ng-model="PagoNuevo.MovInt" 
+                                 aria-label="Checkbox 1"
+                                 style="margin-bottom:0px;margin-left:20px;color:grey">
+                      Es un movimiento interno
+                    </md-checkbox>
+                </div>
+                <div layout-align="center center" style="padding-bottom: 2px !important;">
+                    <h5>Seleccione uno tipo de pago</h5>
+                    <md-divider style="padding:0px;"></md-divider>
+                    <md-content style="max-height:120px;font-size:10px !important">
+                        <md-radio-group ng-model="selecteRadio.selected" ng-change="CalcularDatosFecha()" name="raidioBtn" ng-required="true">
+                            <div ng-repeat="tps in tipos" class="row">
+                                <div flex layout='row' layout-padding layout-align="start center">
+                                    <md-radio-button flex ng-value="tps.id" class="md-primary" style="font-size:small !important">
+                                        {{tps.title}}
+                                    </md-radio-button>
+                                    <div flex style="max-width:200px;padding:0px!important">
+                                        <md-datepicker ng-model="tps.fecha" ng-change="CalcularDatosFecha()" class="ng-hide" ng-show="selecteRadio.selected == tps.id && selecteRadio.selected != 3" md-placeholder="fecha pago"></md-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-radio-group>
+                        <div ng-messages="ctrl.formGen.raidioBtn.$error">
+                            <div ng-message="required">Debe seleccionar una opcion</div>
+                        </div>
+                    </md-content>
+                    <md-divider></md-divider>
+                </div>
+                <md-content ng-show="NoNpRequerido" md-theme="docs-dark" layout-padding style="margin-left: -8px;min-width: 890px !important;">
+                    <md-radio-group ng-model="grupoBtn.seleccion" layout="row" class="md-primary" style="margin-bottom:15px;font-size:smaller !important">
+                        <md-radio-button ng-value="1" flex="50">Responsable Interno</md-radio-button>
+                        @*<md-radio-button ng-value="2" flex="40">Departamento</md-radio-button>
+                        <md-radio-button ng-value="3" flex="40">Director</md-radio-button>*@
+                        <md-radio-button ng-value="4" flex="40">Responsable Externo</md-radio-button>
+                    </md-radio-group>
+                    <div layout="row" layout-align="space-between center" style="font-size:smaller !important">
+                        <div layout-align="center center" flex="40" layout="row"  style="max-width:350px !important;margin-top: 7px !important;">
+                            <md-autocomplete 
+                                             layout-fill
+                                             md-input-name="AutoEncargado"
+                                             ng-required="grupoBtn.seleccion == 1 && NoNpRequerido"
+                                             ng-disabled="grupoBtn.seleccion != 1"
+                                             md-no-cache="true"
+                                             md-selected-item="ctrl.selectedItem4"
+                                             md-search-text-change="ctrl.searchTextChange4(ctrl.searchText4)"
+                                             md-search-text="ctrl.searchText4"
+                                             md-selected-item-change="ctrl.selectedItemChange4(item)"
+                                             md-items="item in ctrl.querySearch4(ctrl.searchText4)"
+                                             md-item-text="item.value"
+                                             md-min-length="0"
+                                             md-require-match
+                                             md-menu-class="autocomplete-custom-template"
+                                             md-floating-label="SELECCIONA UN RESPONSABLE">
+                                <md-item-template>
+                                    <span class="item-title">
+                                        <span style="font-size:small"><strong> {{item.puesto}}</strong> </span>
+                                    </span>
+                                    <span class="item-metadata">
+                                        <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+                                            <span>
+                                                {{item.value}}
+                                            </span>
+                                    </span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe ninguna subcuenta con el nombre "{{ctrl.searchText4}}".
+                                </md-not-found>
+                                <div ng-messages="ctrl.formGen.AutoEncargado.$error" ng-if="ctrl.formGen.AutoEncargado.$touched">
+                                    <div ng-message="required"><b>Debes</b> Seleccionar un encargado</div>
+                                    <div ng-message="md-require-match">Debe existir el encargado</div>
+                                </div>
+                            </md-autocomplete>
+                        </div>
+                        @*<md-input-container class="md-block InputResponsable" flex="30" style="max-width:180px !important">
+                            <label>Departamento</label>
+                            <md-select ng-model="DeptoResponsable" name="dept" ng-required="grupoBtn.seleccion == 2 && NoNpRequerido" ng-disabled="grupoBtn.seleccion != 2">
+                                <md-option ng-repeat="dept in Deptos track by $index" ng-value="dept">
+                                    {{dept}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="ctrl.formGen.dept.$error">
+                                <div ng-message="required">Es obligatorio</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block InputResponsable" flex="30" style="max-width:180px !important">
+                            <label>Director</label>
+                            <md-select ng-model="DirectorResponsable" name="direct" ng-required="grupoBtn.seleccion == 3 && NoNpRequerido" ng-disabled="grupoBtn.seleccion != 3">
+                                <md-option ng-repeat="direct in Director" ng-value="direct">
+                                    {{direct}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="ctrl.formGen.direct.$error">
+                                <div ng-message="required">Es obligatorio</div>
+                            </div>
+                        </md-input-container>*@
+                        <md-input-container flex="35" class="md-block InputResponsable" style="max-width:350px !important">
+                            <label>Externo</label>
+                            <input ng-model="ExternoResponsable" ng-required="grupoBtn.seleccion == 4 && NoNpRequerido" name="Ext" ng-disabled="grupoBtn.seleccion != 4">
+                            <div ng-messages="ctrl.formGen.Ext.$error">
+                                <div ng-message="required">Es obligatorio</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </md-content>
+                <div>
+                    <md-input-container class="md-block noInputMargin" style="margin-top:50px">
+                        <label>Observaciones</label>
+                        <textarea ng-model="PagoNuevo.Observaciones" name="Observ" required md-maxlength="350" rows="3" md-select-on-focus></textarea>
+                        <div ng-messages="ctrl.formGen.Observ.$error" role="alert">
+                            <div ng-message-exp="['required', 'maxlength']">
+                                Este campo es obligatorio y debe ser menor a 150 caracteres
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
+            <form name="ctrl.formConcept" style="" layout-padding layout-align="start center" novalidate>
+                <h5 style="color:black;margin:0px !important">Agrege conceptos al pago</h5>
+                <div layout="row" layout-align="end center">
+                    <md-button md-no-ink class="md-primary" style="padding:0px !important" ng-click="BorrarContenidoConceptos()">
+                        <ng-md-icon icon="format_clear" ng-attr-style="fill:#ef5350" size="24">
+                            <md-tooltip>
+                               Limpiar datos
+                            </md-tooltip>
+                        </ng-md-icon>
+                    </md-button>
+                </div>
+              
+                    <div layout="row" style="margin-top:-10px" layout-fill layout-align="space-around center">
+                        <div layout-align="center center" layout="row" style="min-width:250px">
+                            <md-autocomplete ng-disabled="isDisabledAutoComplete"
+                                             layout-fill
+                                             md-input-name="AutoProyecto"
+                                             required
+                                             md-no-cache="true"
+                                             md-selected-item="ctrl.selectedItem"
+                                             md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                             md-search-text="ctrl.searchText"
+                                             md-selected-item-change="ctrl.selectedItemChange(item)"
+                                             md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                             md-item-text="item.display"
+                                             md-min-length="0"
+                                             md-require-match
+                                             md-floating-label="SELECCIONA UN PROYECTO">
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe ningun proyecto con el nombre "{{ctrl.searchText}}".
+                                </md-not-found>
+                                <div ng-messages="ctrl.formConcept.AutoProyecto.$error" ng-if="ctrl.formGen.AutoProyecto.$touched">
+                                    <div ng-message="required"><b>Debes</b> Seleccionar un proyecto</div>
+                                    <div ng-message="md-require-match">Debe existir el proyecto</div>
+                                </div>
+                            </md-autocomplete>
+                        </div>
+                        <div layout-align="center center" layout="row" style="min-width:250px">
+                            <md-autocomplete ng-disabled="isDisabledAutoComplete"
+                                             layout-fill
+                                             md-input-name="AutoCuenta"
+                                              required
+                                             md-no-cache="true"
+                                             md-selected-item="ctrl.selectedItem2"
+                                             md-search-text-change="ctrl.searchTextChange2(ctrl.searchText2)"
+                                             md-search-text="ctrl.searchText2"
+                                             md-selected-item-change="ctrl.selectedItemChange2(item)"
+                                             md-items="item in ctrl.querySearch2(ctrl.searchText2)"
+                                             md-item-text="item.display"
+                                             md-min-length="0"
+                                             md-require-match
+                                             md-floating-label="SELECCIONA UNA CUENTA">
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText2" md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe ninguna cuenta con el nombre "{{ctrl.searchText2}}".
+                                </md-not-found>
+                                <div ng-messages="ctrl.formConcept.AutoCuenta.$error" ng-if="ctrl.formGen.AutoCuenta.$touched">
+                                    <div ng-message="required"><b>Debes</b> Seleccionar una cuenta</div>
+                                    <div ng-message="md-require-match">Debe existir la cuenta</div>
+                                </div>
+                            </md-autocomplete>
+                        </div>
+
+                        <div layout-align="center center" layout="row" style="min-width:250px">
+                            <md-autocomplete ng-disabled="isDisabledAutoComplete"
+                                             layout-fill
+                                             md-input-name="AutoSubCuenta"
+                                              required
+                                             md-no-cache="true"
+                                             md-selected-item="ctrl.selectedItem3"
+                                             md-search-text-change="ctrl.searchTextChange3(ctrl.searchText3)"
+                                             md-search-text="ctrl.searchText3"
+                                             md-selected-item-change="ctrl.selectedItemChange3(item)"
+                                             md-items="item in ctrl.querySearch3(ctrl.searchText3)"
+                                             md-item-text="item.display"
+                                             md-min-length="0"
+                                             md-require-match
+                                             md-floating-label="SELECCIONA UNA SUBCUENTA">
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText3" md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe ninguna subcuenta con el nombre "{{ctrl.searchText3}}".
+                                </md-not-found>
+                                <div ng-messages="ctrl.formConcept.AutoSubCuenta.$error" ng-if="ctrl.formGen.AutoSubCuenta.$touched">
+                                    <div ng-message="required"><b>Debes</b> Seleccionar una subcuenta</div>
+                                    <div ng-message="md-require-match">Debe existir la subcuenta</div>
+                                </div>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+                
+
+                <div layout-align="center center">
+                    <md-input-container class="md-block noInputMargin">
+                        <label>Concepto</label>
+                        <textarea ng-model="Conceptos.Concepto" name="concep" md-maxlength="350" rows="3" md-select-on-focus  required></textarea>
+                        <div ng-messages="ctrl.fomrConcept.concep.$error" role="alert">
+                            <div ng-message-exp="['required', 'maxlength']">
+                                Este campo es obligatorio y debe ser menor a 150 caracteres
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-align="center center">
+                    <div layout-align="star center">
+                        <md-input-container class="md-block noInputMargin" flex="100">
+                            <label>Monto</label>
+                            <input ng-model="Conceptos.Monto" name="mont" type="text" ui-maskmoney data-prefix="$" data-decimal="." data-thousands=","  required>
+                            <div ng-messages="ctrl.fomrConcept.mont.$error" role="alert">
+                                <div ng-message="required">Es obligatorio</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <md-toolbar class="md-accent" style="max-height:54px !important;">
+                    <div class="md-toolbar-tools" layout-align="center center" layout-wrap>
+                        <md-button md-no-ink class="md-primary" aria-label="More" ng-click="VerificarDatosGen()" style="color:white !important;font-weight:lighter;font-size:12px">
+                            <span> Agregar Concepto</span>
+                            <ng-md-icon class="BtnAddConcept" icon="vertical_align_bottom" style="fill: white" size="24"></ng-md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    <div class="main-content-wrapper" style="background-color:#ECEFF1;width:890px;max-width:1250px">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="PAGO NUEVO">
+                <md-content style="max-height:645px;background-color:#ECEFF1;">
+                    <md-subheader class="md-primary">TOTAL DEL PAGO: {{MontoTotal | number: 2}}</md-subheader>
+                    <md-table-container>
+                        <table md-table ng-model="selectedTable">
+                            <thead md-head md-order="query.order">
+                                <tr md-row>
+                                    <th md-column></th>
+                                    <th md-column md-order-by="nameToLower"><span>Concepto</span></th>
+                                    <th md-column><span>Proyecto</span></th>
+                                    <th md-column>Cuenta</th>
+                                    <th md-column>Subcuenta</th>
+                                    <th md-column>Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody md-body>
+                                <tr md-row md-select="concept" md-select-id="Concepto" md-auto-select ng-repeat="concept in listaConceptos track by $index">
+                                    <td md-cell style="padding: 0 5px !important;">
+                                        <md-button ng-click="EliminarConcepto(concept.ID)" style="min-width:20px !important;margin:0px !important;min-height:15px !important;line-height:0px !important" aria-label="btn2" md-no-ink class="md-warn">
+                                            <ng-md-icon icon="delete_sweep" ng-click="" ng-attr-style="fill:#EF5350" size="24"></ng-md-icon>
+                                        </md-button>
+                                    </td>
+                                    <td md-cell>{{concept.Concepto}}</td>
+                                    <td md-cell md-truncate>{{concept.Proyecto}}</td>
+                                    <td md-cell md-truncate>{{concept.Cuenta}}</td>
+                                    <td md-cell md-truncate>{{concept.Subcuenta}}</td>
+                                    <td md-cell>{{concept.Monto | number: 2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </div>
+    <md-toolbar class="md-primary" style="max-height: 64px !important;margin-bottom:20px;">
+        <div class="md-toolbar-tools" layout-align="center center" layout-wrap>
+            <md-button md-no-ink  aria-label="MorePay" ng-click="PreGuardarPago()" style="color:white !important;font-weight:lighter;font-size:12px;">
+                <span> ENVIAR PAGO  </span><ng-md-icon class="BtnAddConcept" icon="send" style="fill: white" size="24"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <nav mfb-menu toggling-method="hover" position="br" effect="zoomin" label="Opciones" active-icon="ion-ios-lightbulb" resting-icon="ion-ios-bell">
+        @*<a mfb-button label="Lista de Pagos" icon="ion-ios-paper-outline"  ng-click="VerPagosLista()" ></a>*@
+        @*<a mfb-button label="Facturas" icon="ion-android-document" ng-click="Facturas()"></a>*@
+        <a mfb-button label="Buscar y Editar" icon="ion-ios-search-strong" ng-click="BusquedaPagos()"></a>
+        <a mfb-button label="Cerrar sesion" icon="ion-log-out" ng-click="CerrarSesion()"></a>
+    </nav>  
+</div>
